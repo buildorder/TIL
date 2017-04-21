@@ -21,15 +21,15 @@ Data Set
 
 #### Detail
 
-$$ cost = 1/m \sum_{m}^{i=1}(Wx^i - y^i)^2 $$
+$$ cost = \frac{1}{m} \sum_{m}^{i=1}(Wx^i - y^i)^2 $$
 
 위 식과 같이 Cost를 계산하는 수식에서
 
-$$ W := W - \alpha * \delta/\delta W * cost(W) $$
+$$ W := W - \alpha  \frac{\delta}{\delta W} cost(W) $$
 
 위와 같이 W를 미분하고 Learning rate를 곱한 값을 빼면 된다 즉 **미분을 해서 구한 현재의 기울기** 에 작은 값(Learning rate)을 곱하고 빼면 되는 것이다.
 
-$$ W := W - \alpha * 1/m \sum_{m}^{i=1}(Wx^i - y^i)x^i $$
+$$ W := W - \alpha \frac{1}{m} \sum_{m}^{i=1}(Wx^i - y^i)x^i $$
 
 결과적으로 위와 같은 식이 된다
 

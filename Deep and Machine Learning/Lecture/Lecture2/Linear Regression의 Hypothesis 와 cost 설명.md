@@ -19,7 +19,7 @@ Model을 만들 때 어느 Model이 더 좋은지 판단할 필요기 때문에
 $ (H(x) - y)^2 $
 위의 식과 같은 방식으로
 
-$$ cost = 1/m \sum_{m}^{i=1}(H(x^i) - y^i)^2 $$
+\[ cost = \frac{1}{m} \sum_{m}^{i=1}(H(x^i) - y^i)^2 \]
 모델 전체에 적용시키게 된다면 위와 같은 식이 된다
 
 #### Linear Regression의 목표
