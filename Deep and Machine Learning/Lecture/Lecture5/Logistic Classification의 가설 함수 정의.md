@@ -28,6 +28,12 @@
 * z가 커질수록 1에 가까워 지고
 * z가 작아질수록 0에 가까워 진다
 
+#### Hypothesis
+
+\[H(X) = \frac{1}{1+{e}^{-W^TX}}\]
+
+Logistic Classification의 Hypothesis는 위와 같은 모양을 하게 된다
+
 #### Reference
 이 문서는 하단 주소의 내용을 기반으로 작성하였음을 알립니다
 
