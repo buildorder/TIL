@@ -30,4 +30,5 @@ Line discipline은 low level의 device driver코드와 high level의 일반적�
 
 ### 출처
 https://en.wikipedia.org/wiki/Line_discipline
+
 http://flylib.com/books/en/3.475.1.43/1/
