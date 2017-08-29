@@ -61,3 +61,7 @@ interface는 외부적으로 다른 장치와 3가지 핀으로 연결된다. �
 RX : Receive Data Input은 serial data input이다. Oversampling 기술은 들어오는 유효한 데이터와 noise를 구분하므로서 data recovery에 사용된다.
 
 TX : 전송 Data 출력. 전송기가 disable 됐을 때, 출력 핀은 I/O 포트 configuration으로 돌아간다. 전송기가 사용 가능하지만 아무것도 전송할게 없을때, TX핀은 high level이다. Single-wire 그리고 Smartcard 모드일때, 이 I/O는 data를 송수신한다 (USART level에서, SW_RX에서 data가 수신된다).
+
+
+### Fractional baud rate generation
+수신기와 송신기를 위한 baud rate는 USARTDIV에 프로그래밍된 Mantissa값과 Fraction 값이 같게 설정되어야 합니다.
