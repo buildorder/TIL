@@ -65,3 +65,40 @@ TX : 전송 Data 출력. 전송기가 disable 됐을 때, 출력 핀은 I/O 포�
 
 ### Fractional baud rate generation
 수신기와 송신기를 위한 baud rate는 USARTDIV에 프로그래밍된 Mantissa값과 Fraction 값이 같게 설정되어야 합니다.
+
+## Coding
+USART1번을 사용해서 PC와 MCU간의 통신을 해본다.
+
+GPIOA에 CLOCK을 공급한다.
+
+![](./alternate_function_mapping.PNG)
+Alternate fucntion mapping 표를 보면 PA9번과 PA10번에 각각 USART_TX와 USART_RX가 연결된 것을 볼수 있다. Alternate fucntion을 사용하기 위해 **GPIOA_MODER** 레지스터에 설정을 해줘야 한다.
+
+![](./gpiox_moder.PNG)
+PA9와 PA10을 사용 할것 이므로 [19 : 18]과 [17 : 16] 비트에 Alternate fucntion mode의 값인 **0b10** 을 써넣으면 된다.
+
+![](./gpiox_afrh.PNG)
+Alternate function mode로 설정한 후에 몇번 Alternate function을 쓸지 결정하기 위해 **GPIOA_AFRH** 레지스터에 세팅을 해준다. **Alternate fucntion mapping** 표에서 확인할 수 있듯이 **AF7** 번을 사용할 것이므로 **0b0111** 을 세팅해주면 된다.
+
+ ![](./rcc_apb2enr.PNG)
+ USART1을 사용하기 위해서 clock을 enable 해줄 필요가 있다. USART1번은 APB2 버스에 물려있으므로, **RCC_APB2ENR** 레지스터에서 USART1번을 enable 시켜주자.
+
+![](./baudrate_equation.PNG)
+
+원하는 buad rate를 사용하기 위해 **USART_BRR** 레지스터에 계산해서 세팅해줄 필요가 있다. 식은 위와 같다. **Tx/Rx baud** 는 우리가 원하는 baud rate를 적으면 된다. 여기서는 **9600** 을 기준으로 한다. **fck** 는 사용하고자 하는 USART에 연결된 버스의 클럭이다. 현재는 APB2버스에 연결되있고 **84Mhz** 을 사용하고 있다. **OVER8** 은 Oversampling사용 유무인데 사용하지 않으므로 **0** 으로 둔다. 계산을 해보면 USARTDIV는 **546.875** 라는 값이 나온다.
+
+![](./usartdiv.PNG)
+
+구한 **USARTDIV** 값으로 **USART_BRR** 레지스터에 채울 값을 구하는 부분이다. **DIV_Fraction** 값을 구하기 위해 소수부인 0.875와 16을 곱해준다. 그러면 **14** 값이 나온다. **DIV_Mantissa** 값을 구하기 위해 정수만 따로 땐다. **546** 값이 나온다. 이 둘을 16진수로 변환해서 앞에는 **DIV_Mantissa** 뒤에는 **DIV_Fraction** 값을 배치시킨다. 최종적인 **USART_BRR** 레지스터에 설정해야하는 값은 **0x222E** 가 된다.
+
+![](./usart_cr1.PNG)
+USART를 사용하기 위해 **USART_CR1** 레지스터의 **UE, TE, RE** 각각 **USART enable**, **Transmitter enable**, **Receiver enable** 비트를 Set 해준다.
+
+![](./usart_dr.PNG)
+위 레지스터가 실제로 USART로 데이터를 주고받기 위한 데이터를 넣고 빼는 레지스터다. Code상에는 **USART_DR** 레지스터 하나만 사용하지만
+
+![](./usart_block_diagram.PNG)
+실제는 위와같이 **Transmit data register(TDR)** 과 **Receive data register (RDR)** 이 따로있다. 값을 쓸때는 **TDR** 읽을 때는 **RDR** 을 접근하게 된다.
+
+![](./usart_sr.PNG)
+USART로 DATA를 주고받을 때 **USART_SR** 레지스터를 활용하여 적절하게 분기 조절을 하면된다.
