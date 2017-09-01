@@ -11,3 +11,8 @@ System clock으로 구동되게 사용될 수 있는 3가지의 다른 clock sou
 * 32.768kHz low-speed external crystal (LSE crystal), 선택적으로 RTC clock으로 구동한다.
 
 각각의 clock source들은 power 소비량 optimize를 위해 독립적으로 switch되거나 off될수 있다.
+
+몇몇개의 prescaler들이 **AHB frequency**, **high-speed** APB (APB2), **low-speed** APB (APB1) 들의 frequency범위를 설정하는데 사용된다.
+* AHB의 최대 frequency는 180MHz이다.
+* high-speed APB2의 허용되는 최대 frequency는 90MHz이다.
+* low-speed APB1의 허용되는 최대 frequency는 45MHz이다.
