@@ -12,7 +12,7 @@ Nested vector intterupt controller(NVIC) 은 다음과 같은 기능이 있다:
 
 NVIC과 processor core는 가까이 붙어 있으므로, **low latency intterupt processing** 과 늦게 도착하는 interrupt들의 효과적인 processing이 가능해진다.
 
-모든 interrupt는 NVIC에 의해 관리되는 core exception이 있다.
+core exception을 포함한 모든 interrupt는 NVIC이 관리한다.
 
 ### Coding
 
