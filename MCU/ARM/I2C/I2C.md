@@ -64,3 +64,11 @@ peripheral input clock frequency는 최소한은 다음과 같다 :
 #### SCL master clock generation
 CCR bit는 (개별적으로) rising/falling edge로 부터 시작하고, high/low level의 SCL clock을 생성한다.
 슬레이브가 SCL 라인을 늘릴 수 있으므로, 주변 장치는 상승 에지 생성 후 TRISE 비트에 프로그래밍 된 시간이 끝날 때 버스에서 SCL 입력을 확인합니다.
+
+### Slave address transmission
+
+7-bit addressing mode에서는, 하나의 address byte가 보내진다. 주소가 보내지자 마자 hardware에 의해 **ADDR** bit가 set되고 만약 **ITEVFEN** bit가 set되어 있다면 interrupt가 생성된다. master는 slave address의 LSB를 보고 transmitter/receiver 무엇으로 작동할지 결정한다. 7-bit addressing mode 에서는 LSB가 0이면 transmitter, 1이면 receiver 으로 작동한다.
+
+### Master transmitter
+
+**ADDR** bit는 **SR1** regitser를 읽고 잇달아 **SR2** regitser을 읽음으로서 clear 할 수 있다.
