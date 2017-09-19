@@ -72,3 +72,65 @@ CCR bit는 (개별적으로) rising/falling edge로 부터 시작하고, high/lo
 ### Master transmitter
 
 **ADDR** bit는 **SR1** regitser를 읽고 잇달아 **SR2** regitser을 읽음으로서 clear 할 수 있다.
+
+
+### Coding
+
+![](./i2c_cr2.PNG)
+
+**I2C_CR2** regitser의 **FREQ** bit는
+
+![](./freq.PNG)
+
+반드시 APB clock frequency로 설정되어야 한다. 이 FREQ 필드는 peripheral에 의해 I2C 스펙을 준수하여 data를 생성하거나 시간을 hold하는데 사용된다. APB bus는 42Mhz로 설정되어 있으니, 42로 설정하면 된다.
+
+![](./i2c_ccr.PNG)
+
+**I2C_CCR** register의 **CCR** bit는 SCL을 control한다.
+
+![](./ccr.PNG)
+
+CCR값을 구하기 위해서 여러 절차가 필요하다.
+
+Thigh = CCR * Tpclk1
+
+=> CCR = Thigh / Tpclk1
+
+#### Tpclk1 구하기
+
+PCLK는 peripheral clock speed 이다. 즉 APB bus의 속도 42Mhz가 된다.
+
+t = 1/f 이므로
+
+Tpclk1 = 1/42000000
+
+Tpclk1 = 0.0000000238...
+
+Tpclk1 = 23.8[ns] 가 된다
+
+#### Thigh 구하기
+Tscl = Thigh + Tlow
+
+Thigh = Tlow
+
+Tscl = Thigh / 2
+
+Tscl = 1/Fscl
+
+Fscl = 1000000
+
+Tscl = 1/1000000
+
+Tscl = 0.00001
+
+Tscl = 10000[ns]
+
+10000 = Thigh / 2
+
+Thigh = 5000[ns]
+
+CCR = Thigh / Tpclk1
+
+CCR = 5000 / 23.8
+
+CCR = 23.8
