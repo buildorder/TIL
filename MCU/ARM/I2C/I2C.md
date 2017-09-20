@@ -113,19 +113,19 @@ Tscl = Thigh + Tlow
 
 Thigh = Tlow
 
-Tscl = Thigh / 2
+Thigh = Tscl / 2
 
 Tscl = 1/Fscl
 
-Fscl = 1000000
+Fscl = 100000
 
-Tscl = 1/1000000
+Tscl = 1/100000
 
 Tscl = 0.00001
 
 Tscl = 10000[ns]
 
-10000 = Thigh / 2
+Thigh = 10000 / 2
 
 Thigh = 5000[ns]
 
